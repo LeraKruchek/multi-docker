@@ -1,0 +1,26 @@
+language: generic
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t react-test -f ./client/Docker.dev ./client
+
+script:
+  - docker run -e CI=true react-test npm test  -- --coverage
+
+after_success:
+  - docker build -t valeryia/multi-client ./client
+  - docker build -t valeryia/multi-nginx ./nginx
+  - docker build -t valeryia/multi-server ./server
+  - docker build -t valeryia/multi-worker ./worker
+
+# Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+# Take images and push to docker hub
+  - docker push valeryia/multi-client
+  - docker push valeryia/multi-nginx
+  - docker push valeryia/multi-server
+  - docker push valeryia/multi-worker
