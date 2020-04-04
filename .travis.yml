@@ -24,3 +24,16 @@ after_success:
   - docker push valeryia/multi-nginx
   - docker push valeryia/multi-server
   - docker push valeryia/multi-worker
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-2-411124871946
+  bucker_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
