@@ -27,14 +27,14 @@
       "image": "valeryia/multi-nginx",
       "hostname": "nginx",
       "essential": true,
-      "memory": 128,
       "portMappings": [
         {
           "portHost": 80,
           "containerPort": 80
         }
       ],
-      "links": ["client", "server"]
+      "links": ["client", "server"],
+      "memory": 128
     }
   ]
 }
